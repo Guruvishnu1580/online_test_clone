@@ -1,4 +1,6 @@
-# Logs
+# -----------------------------------------------------
+# LOG FILES
+# -----------------------------------------------------
 logs
 *.log
 npm-debug.log*
@@ -7,18 +9,48 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
+# -----------------------------------------------------
+# DEPENDENCIES
+# -----------------------------------------------------
+node_modules/
+
+# -----------------------------------------------------
+# BUILD OUTPUT
+# -----------------------------------------------------
+dist/
+dist-ssr/
+build/
+
+# -----------------------------------------------------
+# ENVIRONMENT VARIABLES
+# (Do NOT push secrets to GitHub)
+# -----------------------------------------------------
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# -----------------------------------------------------
+# LOCAL CONFIG FILES
+# -----------------------------------------------------
 *.local
 
-# Editor directories and files
+# -----------------------------------------------------
+# EDITOR DIRECTORIES / SYSTEM FILES
+# -----------------------------------------------------
 .vscode/*
 !.vscode/extensions.json
-.idea
+.idea/
 .DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# -----------------------------------------------------
+# TEMPORARY FILES
+# -----------------------------------------------------
+*.tmp
+*.temp
