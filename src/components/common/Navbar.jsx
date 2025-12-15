@@ -1,4 +1,6 @@
 import React from 'react'
+import { BellRing,LogOut } from 'lucide-react'
+import './Navbar.css'
 
 const Navbar = () => {
   return (
@@ -8,20 +10,16 @@ const Navbar = () => {
       </div>
       
       <div className="navbar-controls">
-        
         <button 
           className="nav-button notification-button"
           aria-label="View Notifications"
         >
-          🔔Notifications 
-        </button>
-
-      
+          <BellRing /></button>
         <button 
           className="nav-button logout-button"
           aria-label="Logout"
         >
-          🚪Logout
+          <LogOut />
         </button>
       </div>
     </header>

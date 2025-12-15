@@ -7,15 +7,16 @@ import '../../App.css'
 const HrLayout = () => {
   return (
     <div className="hr-dashboard-layout">
-        <Navbar />
-        <div className="hr-layout-content">
-            <Sidebar />
-            <main className="hr-main-section">
-                <Outlet />
-            </main>
-        </div>
+      <Navbar />
+      <div className="hr-layout-content">
+        <Sidebar />
+        <main className="hr-main-section">
+          <Outlet />
+        </main>
+      </div>
     </div>
   )
 }
+
 
 export default HrLayout
