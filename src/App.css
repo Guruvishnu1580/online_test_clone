@@ -1,1 +1,211 @@
- 
+ /* --- 1. THEME VARIABLES --- */
+:root {
+    /* Colors */
+    --color-background-primary: #191c24; /* Very Dark Background (Slightly blueish tint for depth) */
+    --color-background-sidebar: #1f232e; /* Sidebar background (Deeper than primary) */
+    --color-background-card: #2c323f; /* Card/Elevation background */
+    --color-text-primary: #f0f0f0; 
+    --color-text-secondary: #a0a8b9; /* Soft grey for secondary text */
+    --color-accent: #00bcd4; /* Cyan/Teal Accent */
+    --color-accent-hover: #0096a6;
+    --color-border: #3b4252; /* Subtle border color */
+
+    /* Typography & Structure */
+    --font-family-primary: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --border-radius: 8px;
+    --sidebar-width: 250px;
+    --navbar-height: 60px;
+    --transition-speed: 0.3s;
+}
+
+body {
+    background-color: var(--color-background-primary);
+    color: var(--color-text-primary);
+    font-family: var(--font-family-primary);
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+}
+/* --- 2. LAYOUT STRUCTURE (hr-dashboard-layout) --- */
+
+/* Main Container: Full height setup */
+.hr-dashboard-layout {
+    display: flex;
+    flex-direction: column; /* Stack Navbar on top of the main content area */
+    min-height: 100vh;
+}
+
+/* Content Area: Navbar is already outside, so this contains Sidebar and Main */
+.hr-layout-content {
+    display: flex;
+    flex-grow: 1; /* Takes up all remaining vertical space */
+    min-height: calc(100vh - var(--navbar-height)); /* Ensure content area takes full screen height minus the navbar */
+}
+
+/* Main Content Area: Scrollable and takes remaining width */
+.hr-main-section {
+    flex-grow: 1; /* Takes up all available horizontal space */
+    padding: 20px;
+    overflow-y: auto; /* Allow content to scroll vertically */
+    margin-left: 0; /* Important: Placeholder for when sidebar is open */
+}
+
+/* Optional: For very wide screens, you might want to cap the main content width */
+.hr-main-section > .container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+/* --- 3. COMPONENT STYLING (Navbar & Sidebar) --- */
+
+/* NAVBAR: Fixed, Elevated Look */
+.navbar {
+    height: var(--navbar-height);
+    background-color: var(--color-background-card); /* Slightly lighter for elevation */
+    border-bottom: 1px solid var(--color-border);
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-brand {
+    color: var(--color-accent);
+    font-size: 1.5em;
+    font-weight: 800;
+}
+
+/* SIDEBAR: Fixed, Deeper Background */
+/* --- 1. SIDEBAR CONTAINER (nav.sidebar) --- */
+.sidebar {
+    /* Dimensions and Color defined by root variables */
+    width: var(--sidebar-width); /* e.g., 250px */
+    min-width: var(--sidebar-width);
+    background-color: var(--color-background-sidebar); /* Deeper dark color */
+    color: var(--color-text-secondary);
+    
+    /* Layout and Positioning */
+    padding: 20px 0; /* Vertical padding only */
+    position: sticky; /* Keep it visible next to the scrolling content */
+    top: var(--navbar-height); /* Start below the Navbar */
+    height: calc(100vh - var(--navbar-height)); /* Full height minus Navbar */
+    overflow-y: auto; /* Allow scrolling if many items exist */
+    
+    /* Visuals */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Subtle shadow on the right edge */
+}
+
+/* --- 2. LIST RESET (ul) --- */
+.sidebar ul {
+    list-style: none; /* Remove bullet points */
+    padding: 0;
+    margin: 0;
+}
+
+/* --- 3. LIST ITEMS (li) --- */
+.sidebar li {
+    margin: 0;
+}
+
+/* --- 4. NAVIGATION LINKS (a) --- */
+.sidebar a {
+    display: flex; /* Ensures the entire area is clickable */
+    align-items: center;
+    padding: 12px 20px; /* Generous padding for a clean, modern look */
+    text-decoration: none;
+    font-size: 1em;
+    font-weight: 500;
+    color: var(--color-text-secondary); /* Default soft grey text */
+    
+    /* Smooth Transitions for interactivity */
+    transition: all 0.2s ease-in-out;
+    border-left: 3px solid transparent; /* Placeholder for active state border */
+}
+
+/* INTERACTIVE STATES */
+
+.sidebar a:hover {
+    color: var(--color-text-primary); /* Brighten text */
+    background-color: rgba(0, 188, 212, 0.08); /* Very subtle accent background */
+    border-left-color: var(--color-border); /* Subtle border on hover */
+}
+/* Example: If the current URL matches the link, apply the 'active' class to the <a> tag */
+.sidebar a.active {
+    color: var(--color-accent); /* Bright primary color */
+    background-color: rgba(0, 188, 212, 0.15); /* More prominent accent background */
+    border-left-color: var(--color-accent); /* Highlight strip */
+    font-weight: 600;
+}
+/* --- 1. NAVBAR CONTAINER (header.navbar) --- */
+.navbar {
+    height: var(--navbar-height); /* Defined as 60px in previous CSS */
+    background-color: var(--color-background-card); 
+    border-bottom: 1px solid var(--color-border);
+    padding: 0 20px;
+    
+    /* Flex Layout for Alignment */
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Pushes logo and controls to opposite ends */
+    
+    /* Fixed Positioning (Optional, but good for dashboards) */
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-sizing: border-box; /* Include padding/border in element's total width/height */
+}
+
+/* --- 2. LOGO/BRANDING (div.navbar-logo) --- */
+.navbar-logo {
+    color: var(--color-text-primary); /* Use accent color for prominence */
+    font-size: 1.4em;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* --- 3. CONTROLS CONTAINER (div.navbar-controls) --- */
+.navbar-controls {
+    display: flex;
+    gap: 15px; /* Spacing between the buttons */
+    align-items: center;
+}
+
+/* --- 4. BUTTONS (button.nav-button) --- */
+.nav-button {
+    background: none;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 1em;
+    color: var(--color-text-secondary); /* Default text color */
+    border-radius: var(--border-radius);
+    transition: background-color 0.2s, color 0.2s;
+    font-family: inherit; /* Inherit the nice modern font */
+}
+
+.nav-button:hover {
+    background-color: rgba(255, 255, 255, 0.05); /* Subtle hover effect */
+    color: var(--color-text-primary); /* Brighten text on hover */
+}
+
+/* Specific styling for the Notification Button */
+.notification-button {
+    /* Maybe a slightly different text color if you want to emphasize it */
+    color: var(--color-accent); 
+}
+
+/* Specific styling for the Logout Button */
+.logout-button {
+    /* Optional: Give the logout button a slight border to distinguish it */
+    border: 1px solid var(--color-border);
+    padding: 7px 11px; /* Adjust padding to look balanced with border */
+}
+
+.logout-button:hover {
+    border-color: var(--color-text-primary);
+    color: var(--color-text-primary);
+}
