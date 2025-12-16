@@ -1,34 +1,37 @@
 /* =========================================
-   1. Design Token & Variables (Dark Theme)
+   1. Design Tokens & Variables (LIGHT THEME)
    ========================================= */
 :root {
-  /* Core Colors */
-  --primary-color: #3b82f6;       /* Bright Professional Blue */
-  --primary-hover: #2563eb;       /* Slightly deeper blue for interaction */
-  
+  /* Brand */
+  --primary-color: #2563eb;          /* Professional Blue */
+  --primary-hover: #1d4ed8;
+
   /* Backgrounds */
-  --secondary-bg: #1e293b;        /* Dark Slate for cards/sidebar/navbar */
-  --main-bg: #0f172a;             /* Deepest Slate/Black for main background */
-  
-  /* Text Colors */
-  --text-primary: #f1f5f9;        /* Off-white for main text */
-  --text-secondary: #94a3b8;      /* Muted blue-grey for hints/labels */
-  
-  /* Borders & Shadows */
-  --border-color: #334155;        /* Dark grey border */
-  
-  /* Shadows adapted for Dark Mode (using black with higher opacity) */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
-  
-  /* Dimensions */
+  --main-bg: #f8fafc;                /* Page background */
+  --secondary-bg: #ffffff;           /* Cards / Navbar / Sidebar */
+  --sidebar-bg: #f1f5f9;
+
+  /* Text */
+  --text-primary: #0f172a;            /* Almost black */
+  --text-secondary: #475569;          /* Muted gray */
+
+  /* Borders */
+  --border-color: #e2e8f0;
+
+  /* Shadows (Soft for light UI) */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 20px rgba(0, 0, 0, 0.12);
+
+  /* Layout */
   --navbar-height: 64px;
   --sidebar-width: 260px;
   --radius: 12px;
 }
 
-/* Reset basics */
+/* =========================================
+   GLOBAL RESET
+   ========================================= */
 * {
   margin: 0;
   padding: 0;
@@ -52,123 +55,361 @@ body {
 }
 
 /* =========================================
-   3. Navbar Styling
+   3. Navbar
    ========================================= */
-.hr-dashboard-layout nav {
+.navbar {
   height: var(--navbar-height);
   background-color: var(--secondary-bg);
   border-bottom: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0 24px;
+  /* border: 2px solid red; */
   position: sticky;
   top: 0;
-  z-index: 50;
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.3s ease;
+  z-index: 100;
 }
 
-.hr-dashboard-layout nav:hover {
-  box-shadow: var(--shadow-md);
+/* Logo */
+.navbar-logo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--primary-color);
+  margin-left: 16px;
+}
+
+/* Navbar Controls */
+.navbar-controls {
+  display: flex;
+  gap: 12px;
+}
+
+.nav-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  /* margin-right: 20px; */
+}
+.logout-button{
+  margin-right: 40px;
+}
+.nav-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.nav-button:hover {
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--primary-color);
+}
+
+.logout-button:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+}
+/* =========================================
+   NAVBAR LOGO (RESPONSIVE FIX)
+   ========================================= */
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+/* Logo image */
+.navbar-logo img {
+  height: 40px;              /* Perfect for 64px navbar */
+  width: auto;               /* Maintain aspect ratio */
+  object-fit: contain;
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .navbar-logo img {
+    height: 34px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0 16px;
+  }
+
+  .navbar-logo img {
+    height: 30px;
+  }
+
+  .navbar-controls {
+    gap: 8px;
+  }
+
+  .nav-button {
+    width: 36px;
+    height: 36px;
+  }
 }
 
 /* =========================================
-   4. Main Content Wrapper (Sidebar + Outlet)
+   4. Main Layout
    ========================================= */
 .hr-layout-content {
   display: flex;
-  flex: 1; 
+  flex: 1;
   height: calc(100vh - var(--navbar-height));
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 /* =========================================
-   5. Sidebar Styling
+   5. Sidebar
    ========================================= */
-.hr-layout-content aside, 
-.hr-layout-content .sidebar { 
+.sidebar {
   width: var(--sidebar-width);
-  background-color: var(--secondary-bg);
+  background-color: var(--sidebar-bg);
   border-right: 1px solid var(--border-color);
-  height: 100%;
-  overflow-y: auto;
   padding: 24px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  transition: all 0.3s ease-in-out;
+  overflow-y: auto;
 }
 
-/* Sidebar Link Styling */
-.hr-layout-content aside a {
-  text-decoration: none;
-  color: var(--text-secondary);
-  padding: 12px 16px;
-  border-radius: var(--radius);
-  font-weight: 500;
+.sidebar ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidebar ul li a {
   display: flex;
   align-items: center;
   gap: 12px;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  font-size: 0.95rem;
-  border: 1px solid transparent; /* Prevents layout shift */
+  padding: 12px 16px;
+
+  text-decoration: none;
+  font-size: 0.90rem;
+  font-weight: 500;
+
+  color: var(--text-secondary);
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+
+  transition: all 0.2s ease;
 }
 
-/* Sidebar Hover Effect */
-.hr-layout-content aside a:hover {
-  background-color: rgba(59, 130, 246, 0.1); /* Low opacity blue tint */
+.sidebar ul li a:hover {
+  background-color: rgba(37, 99, 235, 0.08);
   color: var(--primary-color);
-  transform: translateX(4px); 
-  border-color: rgba(59, 130, 246, 0.2);
 }
 
-/* Sidebar Active State */
-.hr-layout-content aside a.active {
+.sidebar ul li a.active {
   background-color: var(--primary-color);
-  color: #ffffff; /* Text stays white on blue button */
+  color: #ffffff;
   box-shadow: var(--shadow-md);
 }
 
 /* =========================================
-   6. Main Content Area (Outlet)
+   6. Main Content Area
    ========================================= */
 .hr-main-section {
   flex: 1;
-  background-color: var(--main-bg);
   padding: 32px;
-  overflow-y: auto; 
-  position: relative;
+  overflow-y: auto;
 }
 
-/* Animation for the content appearing */
+/* Fade animation */
 .hr-main-section > * {
-  animation: fadeIn 0.4s ease-out forwards;
-}
-
-/* Card Styling for content inside Outlet */
-.card {
-  background: var(--secondary-bg);
-  border-radius: var(--radius);
-  padding: 24px;
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  color: var(--text-primary); /* Ensure text in cards is light */
-}
-
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-  border-color: #475569; /* Slightly lighter border on hover */
+  animation: fadeIn 0.3s ease-out forwards;
 }
 
 /* =========================================
-   7. Animations
+   7. Cards
+   ========================================= */
+.card {
+  background-color: var(--secondary-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 24px;
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/* Card Header */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* =========================================
+   8. Table
+   ========================================= */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  text-align: left;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  padding: 30px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.table td {
+  padding: 12px;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+/* Email */
+.table td.email {
+  color: #334155;
+  font-weight: 500;
+}
+
+/* =========================================
+   9. Buttons
+   ========================================= */
+.btn {
+  font-size: 0.85rem;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border: none;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
+
+/* =========================================
+   10. Status Toggle
+   ========================================= */
+.status-cell {
+  width: 160px;
+}
+
+.status-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-toggle input {
+  display: none;
+}
+
+.status-toggle label {
+  width: 40px;
+  height: 20px;
+  background: #fecaca;
+  border-radius: 999px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.status-toggle label::after {
+  content: "";
+  width: 14px;
+  height: 14px;
+  background: #dc2626;
+  border-radius: 50%;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: transform 0.3s ease;
+}
+
+.status-toggle input:checked + label {
+  background: #bbf7d0;
+}
+
+.status-toggle input:checked + label::after {
+  background: #16a34a;
+  transform: translateX(20px);
+}
+
+.status-text {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-text.active {
+  color: #16a34a;
+}
+
+.status-text.inactive {
+  color: #dc2626;
+}
+
+/* =========================================
+   11. Action Icons
+   ========================================= */
+.icon-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.icon-btn i {
+  font-size: 1rem;
+}
+
+.icon-btn.edit:hover {
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--primary-color);
+}
+
+.icon-btn.delete:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+}
+
+/* =========================================
+   12. Animations
    ========================================= */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
@@ -176,185 +417,36 @@ body {
   }
 }
 
-/* Scrollbar Customization (Dark Mode) */
+/* =========================================
+   13. Scrollbar
+   ========================================= */
 ::-webkit-scrollbar {
   width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--main-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #475569; /* Darker grey thumb */
+  background: #cbd5f5;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #64748b; /* Lighter grey on hover */
-}
-
-
-
-/* =========================================
-   1. Sidebar Dark Theme Variables
-   ========================================= */
-:root {
-  /* Backgrounds */
-  --sidebar-bg: #0f172a;        /* Deep Slate / Nearly Black */
-  --sidebar-surface: #1e293b;   /* Lighter Slate for elements */
-  
-  /* Text */
-  --text-primary: #f1f5f9;      /* Off-white */
-  --text-muted: #94a3b8;        /* Muted Blue-Grey */
-  
-  /* Accents */
-  --accent-color: #3b82f6;      /* Professional Blue */
-  --accent-glow: rgba(59, 130, 246, 0.15);
-  
-  /* Borders */
-  --border-dark: #334155;
-  
-  /* Layout Dimensions */
-  --navbar-height: 64px;
+  background: #94a3b8;
 }
 
 /* =========================================
-   2. Sidebar Container (Height Fixed)
+   FORCE LIGHT DASHBOARD BACKGROUND (FIX)
    ========================================= */
-.sidebar {
-  width: 260px;
-  
-  /* FIX: Calculate exact height (Viewport - Navbar) */
-  height: calc(100vh - var(--navbar-height));
-  min-height: calc(100vh - var(--navbar-height));
-  
-  background-color: var(--sidebar-bg);
-  border-right: 1px solid var(--border-dark);
-  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.4);
-  
-  display: flex;
-  flex-direction: column;
-  padding: 24px 16px;
-  
-  /* Prevents the sidebar itself from scrolling unless content overflows */
-  overflow-y: auto; 
-  position: sticky;
-  top: var(--navbar-height);
+
+.hr-layout-content {
+  background-color: var(--main-bg);
 }
 
-/* =========================================
-   3. Navigation List
-   ========================================= */
-.sidebar ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px; /* Space between buttons */
+.hr-main-section {
+  background-color: var(--main-bg);
 }
 
-/* =========================================
-   4. Link / Button Styling
-   ========================================= */
-.sidebar ul li a {
-  display: flex;
-  align-items: center;
-  
-  /* Space between Icon and Text */
-  gap: 12px; 
-  
-  padding: 14px 20px;
-  
-  /* Typography */
-  text-decoration: none;
-  color: var(--text-muted);
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 0.95rem;
-  font-weight: 500;
-  letter-spacing: 0.3px;
-  
-  /* Shape & Transition */
-  border-radius: 12px;
-  border: 1px solid transparent; 
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-/* =========================================
-   5. Hover Effects & Animations
-   ========================================= */
-.sidebar ul li a:hover {
-  background-color: var(--sidebar-surface);
-  color: var(--text-primary);
-  border-color: var(--border-dark);
-  
-  /* Movement Effect */
-  transform: translateX(6px);
-  
-  /* Left Accent Bar Effect */
-  box-shadow: inset 4px 0 0 var(--accent-color);
-}
-
-/* Optional: Subtle glow behind text on hover */
-.sidebar ul li a:hover::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--accent-glow);
-  opacity: 1;
-  pointer-events: none;
-  z-index: -1;
-}
-
-/* Active State (Simulated click effect) */
-.sidebar ul li a:active {
-  transform: scale(0.98) translateX(6px); 
-}
-
-/* Active Class (If using NavLink) */
-.sidebar ul li a.active {
-  background-color: var(--accent-color);
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-}
-
-.sidebar ul li a.active:hover {
-  transform: none; /* Don't move if already active */
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
-}
-
-/* =========================================
-   6. Responsiveness
-   ========================================= */
-@media (max-width: 768px) {
-  .sidebar {
-    width: 80px; /* Collapsed width */
-    padding: 24px 8px;
-  }
-  
-  .sidebar ul li a {
-    justify-content: center;
-    padding: 14px 0;
-    
-    /* Remove gap on mobile so icon stays centered */
-    gap: 0; 
-  }
-  
-  /* Hide text labels on tablet/mobile */
-  .sidebar ul li a {
-    font-size: 0; 
-  }
-  
-  /* Ensure Icons stay visible and correct size */
-  .sidebar ul li a svg {
-    width: 20px;
-    height: 20px;
-  }
+/* Remove Bootstrap dark influence */
+.table-dark {
+  background-color: transparent !important;
+  color: var(--text-primary) !important;
 }
