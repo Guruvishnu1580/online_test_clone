@@ -1,12 +1,13 @@
 import React from 'react'
 import { BellRing,LogOut } from 'lucide-react'
-import './Navbar.css'
+import '../../App.css'
+import logo from '../../assets/images/CANDORWORKS-LOGO-Web.png'
 
 const Navbar = () => {
   return (
     <header className="navbar">
       <div className="navbar-logo">
-        CW HR Dashboard
+         <img src={logo} alt="Candorworks-Logo" />
       </div>
       
       <div className="navbar-controls">
