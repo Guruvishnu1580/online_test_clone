@@ -1,24 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import CreateUserModal from "../../components/hr/CreateUserModel";
 import Swal from "sweetalert2";
-// Ensure you have the Bootstrap icons library linked in your project for 'bi bi-...' classes
-
-const initialUsers = [
-  { id: 1, firstname: "Guruvishnu", lastname: "Kajagar", role: "HR", email: "gk@company.com", status: "Active" },
-  { id: 2, firstname: "Tushar", lastname: "Wankhade", role: "HR", email: "tw@test.com", status: "Inactive" },
-  { id: 3, firstname: "Raj", lastname: "Adhav", role: "Admin", email: "ra@admin.com", status: "Active" },
-  { id: 4, firstname: "Rohit", lastname: "Bagdi", role: "HR", email: "rb@company.com", status: "Inactive" },
-  { id: 5, firstname: "Amit", lastname: "Sharma", role: "HR", email: "as@company.com", status: "Active" },
-];
+import { getUsers } from "../../api/hrUsers";
 
 
 const UserManagement = () => {
-  const [users, setUsers] = useState(initialUsers);
+  const [users, setUsers] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [loading,setLoading] = useState(false);
 
+  const fetchUsers = async () => {
+    try{
+      setLoading(true);
+      const res = await getUsers();
+      setUsers(res.data)
+    }
+    catch (error) {
+      Swal.fire("Error","Failed to load users","error");
+    }
+    finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(()=>{
+    fetchUsers();
+  }, []);
   
 
   const handleCreateUser = (newUser) => {
@@ -61,7 +71,7 @@ const handleUpdateUser = (updatedUser) => {
         user.id === id
           ? {
               ...user,
-              status: user.status === "Active" ? "Inactive" : "Active",
+              status: user.is_active === true ? false : true,
             }
           : user
       )
@@ -94,7 +104,7 @@ const handleUpdateUser = (updatedUser) => {
 
   return (
     // Added 'container-fluid' or similar class for page layout in a real app
-     <>
+    <>
     <div className="p-3"> 
       <div className="cardtable shadow-sm border-0"> {/* Use border-0 for cleaner look */}
         
@@ -127,9 +137,9 @@ const handleUpdateUser = (updatedUser) => {
 
             <tbody>
               {users.map((user) => (
-                <tr key={user.id} className={user.status==="Inactive" ? "inactive-row" : ""}>
+                <tr key={user.id} className={user.is_active === false ? "inactive-row" : ""}>
                   <td className="text-center">{user.id}</td>
-                  <td >{user.firstname+" "+user.lastname}</td>
+                  <td >{user.first_name+" "+user.last_name}</td>
                   <td  >{user.email}</td>
 
                   <td className="text-center">
@@ -158,7 +168,7 @@ const handleUpdateUser = (updatedUser) => {
                       <input
                         type="checkbox"
                         className="status-toggle"
-                        checked={user.status === "Active"}
+                        checked={user.is_active === true}
                         onChange={() => toggleStatus(user.id)}
                       />
                       <span className="status-wrapper"></span> 
