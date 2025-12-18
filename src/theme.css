@@ -103,7 +103,14 @@ body {
    padding:  5px 10px !important;
   font-size: 12px !important;
 }
- 
+
+.role-candidate {
+  background: #f5f3ff;
+  color: #fb0394 !important;
+  border: 1px solid #ddd6fe;
+  padding:  5px 10px !important;
+  font-size: 12px !important;
+}
 /* ===============================
    STATUS COLUMN
 ================================ */
